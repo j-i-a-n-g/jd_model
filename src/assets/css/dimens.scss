@@ -1,0 +1,7 @@
+// 定义预计根元素 fontSize => Iphone 6,7,8为例
+$rootFontSize: 375 / 10;
+
+// 定义转换像素为 rem 的函数
+@function px2rem($px) {
+  @return $px / $rootFontSize + rem
+}
