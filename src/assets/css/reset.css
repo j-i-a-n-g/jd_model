@@ -43,6 +43,7 @@ table {
 html, body {
   width: 100%;
   height: 100%;
+  margin: 0;
   overflow: hidden;
   color: #333;
   /* 如果不指定为0，图片之间默认会有一定间距 */
