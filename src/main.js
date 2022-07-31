@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@js/htmlFontSize.js'
+import '@/assets/js/filter'
 import '@/api/index'
 // import VueAwesomeSwiper from 'vue-awesome-swiper'
 

@@ -12,13 +12,25 @@
   </Activity>
   <!-- 京东功能选项组件 -->
   <ModeOptions />
+  <!-- 秒杀专区 -->
+  <Spike />
+  <!-- 拼购节 -->
+  <Activity>
+    <div class="activity-pin-gou-jit">
+      <img src="@img/haoHuoQiang.gif" alt="">
+    </div>
+  </Activity>
+  <!-- 商品列表 -->
+  <Goods></Goods>
 </div>
 </template>
 
 <script>
 import MySwiper from './swiper/MySwiper.vue'
 import Activity from './currency/Activity.vue'
+import Spike from './currency/Spike.vue'
 import ModeOptions from './currency/ModeOptions.vue'
+import Goods from './currency/Goods.vue'
 import { getSwiper, getActivity } from '@/api/home'
 export default {
  name: 'Home' ,
@@ -38,7 +50,9 @@ export default {
  components: {
     MySwiper,
     Activity,
-    ModeOptions
+    ModeOptions,
+    Spike,
+    Goods
 }
 }
 </script>
@@ -49,6 +63,8 @@ export default {
   width: 100%;
   height: 100%;
   background-color: bgColor;
+  overflow: hidden;
+  overflow-y: auto;
   // &-swiper {
   //   width: 100%;
   //   height: 100%;
@@ -60,6 +76,13 @@ export default {
     img {
       display: inline-block;
       width: 33.33%;
+    }
+  }
+  .activity-pin-gou-jit {
+    background-color: #fff;
+    margin-top: $marginSize;
+    img {
+      width: 100%;
     }
   }
 }
