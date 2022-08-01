@@ -1,12 +1,20 @@
 <template>
 <div class="my">
+  <navigation-bar :pageName="pageName" :isShowBack="false"></navigation-bar>
   My
 </div>
 </template>
 
 <script>
+import NavigationBar from './NavigationBar.vue'
 export default {
- name: 'My' 
+ name: 'My' ,
+  data() {
+  return {
+    pageName: '我的'
+  }
+ },
+ components: { NavigationBar },
 }
 </script>
 
