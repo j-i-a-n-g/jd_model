@@ -9,10 +9,10 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use((config) => {
   if(config.params) {
-    config.params.token = '6b9978b0-0e61-11ed-9e5d-1112b9e2c1ac'
+    config.params.token = '3f86d3f0-12d8-11ed-a44b-132b914c803f'
   } else {
     config.params = {
-      token: '6b9978b0-0e61-11ed-9e5d-1112b9e2c1ac'
+      token: '3f86d3f0-12d8-11ed-a44b-132b914c803f'
     }
   }
   return config

@@ -37,7 +37,7 @@
     </div>
   </Activity>
   <!-- 商品列表 -->
-  <Goods></Goods>
+  <Goods :type="3"></Goods>
 </div>
 </template>
 

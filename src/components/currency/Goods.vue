@@ -1,6 +1,6 @@
 <template>
-  <div class="goods goods-waterfall" :style="{height: parentHeight}">
-    <div class="goods-item goods-waterfall-item" v-for="(item, index) in goodsList" :key="index" :style="goodsItemStyle[index]" ref="goodsItem">
+  <div class="goods" :class="goodsStyle" :style="{height: parentHeight}">
+    <div class="goods-item" :class="goodsStyleItem" v-for="(item, index) in sortGoodsSource" :key="index" :style="goodsItemStyle[index]" ref="goodsItem">
     <!-- 图片 -->
     <img class="goods-item-img" :style="heightArr[index]" :src="item.img" alt="">
     <!-- 商品详情描述 -->
@@ -26,28 +26,94 @@ import Direct from './GoodsComponents/Direct.vue'
 import Empty from './GoodsComponents/Empty.vue'
 import { getGoodsList } from '@/api/home'
 export default {
+  props:{
+    type: {
+      type: Number,
+      default: 1
+    },
+    /**
+     * 排序规则：
+     * 1：默认
+     * 1-2：价格由高到低
+     * 1-3：销量由高到低
+     * 2：有货优先
+     * 3：直营优先
+     */
+    optionsDatasId: {
+      type: String,
+      default: '1'
+    }
+  },
   data() {
     return {
       // 商品信息列表
       goodsList: [],
       minHeight:178,
       maxHeight:230,
+      // 随机生成的图片高度数组
       heightArr: [],
       ITEM_MARGIN_SIZE: 8,
+      // 每个商品选项卡的绝对定位相对位置
       goodsItemStyle: [],
-      parentHeight: 0
+      // 组件的总高度
+      parentHeight: '100%',
+      // 根据不同的布局方式使用不同的样式
+      goodsStyle: 'goods-list-arrange',
+      goodsStyleItem: 'goods-list-arrange-item',
+      // 布局样式的类名集合
+      goodsClassName: [
+        // 列表布局
+        {
+          goodsStyle: 'goods-list-arrange',
+          goodsStyleItem: 'goods-list-arrange-item'
+        },
+          // 方格排列
+        {
+          goodsStyle: 'goods-pane-arrange',
+          goodsStyleItem: 'goods-pane-arrange-item'
+        },
+          // 瀑布流
+        {
+          goodsStyle: 'goods-waterfall',
+          goodsStyleItem: 'goods-waterfall-item'
+        }
+      ],
+      // 用做根据属性进行排序的数据源
+      sortGoodsSource: [],
     }
   },
   async created() {
     const { data } = await getGoodsList()
     this.goodsList = data.list
+    this.initStyle()
     console.log(data.list)
-    this.getImgHeight()
-    this.$nextTick(() => {
-      this.setWaterfall()
-    })
+    this.setSortGoodsListById()
   },
   methods: {
+    // 初始化布局页面
+    initStyle() {
+      switch (this.type) {
+        case 1:
+          this.heightArr = []
+          this.goodsItemStyle = []
+          this.goodsStyle = 'goods-list-arrange'
+          this.goodsStyleItem = 'goods-list-arrange-item'
+          break
+        case 2:
+          this.goodsStyle = 'goods-pane-arrange'
+          this.goodsStyleItem = 'goods-pane-arrange-item'
+          break
+        case 3:
+          this.goodsStyle = 'goods-waterfall'
+          this.goodsStyleItem = 'goods-waterfall-item'
+          this.getImgHeight()
+          this.$nextTick(() => {
+            this.setWaterfall()
+          })
+          break
+      }
+    },
+    // 获取图片的随机高度数组
     getImgHeight: function() {
       this.goodsList.forEach(() => {
          const imgHeight = Math.floor(Math.random() * (this.maxHeight - this.minHeight) + this.minHeight) + 'px'
@@ -86,7 +152,70 @@ export default {
         this.goodsItemStyle.push(goodsItemStyle)
       })
       this.parentHeight = (leftHeight >= rightHeight ? leftHeight : rightHeight) + 'px'
+    },
+    // 设置排序的方法
+    setSortGoodsListById() {
+       switch (this.optionsDatasId) {
+        // 默认排序
+        case '1':
+          // 对源数据进行深拷贝，后面重新排序时不会修改原数组
+          this.sortGoodsSource = this.goodsList.slice(0)
+          break;
+        case '1-2':
+          // 价格由高到低排序
+          this.getSortGoodsList('price')
+          break;
+        case '1-3':
+          // 销量由高到低排序
+          this.getSortGoodsList('volume')
+          break;
+        case '2':
+          // 有货优先
+          this.getSortGoodsList('isHave')
+          break;
+        case '3':
+          // 直营优先
+          this.getSortGoodsList('isDirect')
+          break;
+      }
+    },
+    // 数组排序
+    getSortGoodsList(key) {
+      this.sortGoodsSource.sort((val1, val2) => {
+        let v1 = val1[key]
+        let v2 = val2[key]
+        // 判断传进来的key是不是布尔值 有货和直营的排序
+        if (typeof v1 === 'boolean') {
+          // 如果 v1 的值是 true，则排序不变
+          if (v1) {
+            return -1
+          }
+          // 如果 v2 的值是true，则排序靠前
+          if (v2) {
+            return 1
+          }
+          // v1 v2 都是false, 排序不变
+          return 0
+        }
+        // 价格和销量的排序
+        if(parseFloat(v1) >= parseFloat(v2)) {
+          return -1
+        } else {
+          return 1
+        }
+      })
     }
+  },
+  watch: {
+    type: function() {
+      this.initStyle()
+    },
+    // 监听排序方式对应的Id变化
+    optionsDatasId: function() {
+      // console.log(this.optionsDatasId)
+      this.setSortGoodsListById()
+    },
+    // 监听列表数据变化，刷新页面
   },
   components: {
     Direct,
@@ -129,9 +258,38 @@ export default {
     }
   }
 }
+// 列表排列样式
+.goods-list-arrange {
+  display: flex;
+  flex-direction: column;
+  margin-top: $marginSize;
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $lineColor;
+    .goods-item-img {
+      width: px2rem(120);
+      height: px2rem(120);
+    }
+  }
+}
+// 方格排列样式
+.goods-pane-arrange {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  &-item {
+    width: 48%;
+    border-radius: $radiusSize;
+    margin-top: $marginSize;
+  }
+  .goods-item-img {
+    width: 100%;
+  }
+}
+// 瀑布流排列样式
 .goods-waterfall {
   position: relative;
-  margin: $marginSize;
   &-item {
     position: absolute;
     width: 49%;

@@ -3,7 +3,7 @@
   :class="{'bottom-line': pageName}">
     <!-- 左侧 -->
     <div class="left">
-      <img src="@img/back.svg" alt="" v-if="isShowBack">
+      <img src="@img/back.svg" alt="" v-if="isShowBack" @click="$emit('onLeftClick')">
       <!-- 具名插槽 -->
       <slot name="nav-left"></slot>
     </div>
@@ -72,6 +72,7 @@ export default {
     .page-title {
       font-size: $titleSize;
       align-self: center;
+      margin: 0 auto;
     }
   }
 }
