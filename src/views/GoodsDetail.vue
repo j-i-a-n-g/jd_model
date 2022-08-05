@@ -56,7 +56,7 @@
       <!-- 加入购物车，立即购买 -->
     <div class="goods-detail-buy z-index-3">
       <div class="goods-detail-buy-add">加入购物车</div>
-      <div class="goods-detail-buy-now">立即购买</div>
+      <div class="goods-detail-buy-now" @click="onRouterToBuy">立即购买</div>
     </div>
   </div>
 </template>
@@ -94,8 +94,6 @@ export default {
     }
   },
   async created() {
-    // 直接在浏览器中刷新页面时，params会被重置
-    // this.goodsData = this.$route.params.goods
     const { data } = await getGoodsDetail({
         goodsId: this.$route.query.goodsId
     })
@@ -105,6 +103,18 @@ export default {
     // 后退页面
     RouterBackToGoodsList() {
       this.$router.go(-1)
+    },
+    // 跳转到立即购买页面
+    onRouterToBuy() {
+      this.$router.push({
+        name: 'Buy',
+        params: {
+          routeType: 'push'
+        },
+        query: {
+          goodsId: this.$route.query.goodsId
+        }
+      })
     },
     // 页面内容部分的滚动事件
     onScrollChange(scollTop) {

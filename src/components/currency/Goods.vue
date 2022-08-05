@@ -221,7 +221,6 @@ export default {
     this.$router.push({
       name: 'GoodsDetail',
       params: {
-        goods: item,
         routeType: 'push'
       },
       query: {

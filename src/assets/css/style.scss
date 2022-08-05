@@ -33,3 +33,16 @@
   border-left: px2rem(6) solid transparent;
   border-right: px2rem(6) solid transparent;
 }
+// 提交按钮
+.page-commit {
+  width: 90%;
+  height: px2rem(46);
+  line-height: px2rem(46);
+  margin-left: 5%;
+  display: block;
+  background-color: $mainColor;
+  border-radius: px2rem(50);
+  font-style: $titleSize;
+  text-align: center;
+  color: #fff;
+}
