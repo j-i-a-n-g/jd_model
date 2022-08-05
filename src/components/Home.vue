@@ -1,5 +1,5 @@
 <template>
-<div class="home" @scroll="onScrollHome">
+<div class="home" @scroll="onScrollHome" ref="home">
   <navigation-bar :isShowBack="false" :navBarStyle="navBarStyle">
     <!-- 左侧插槽内容 -->
     <template v-slot:nav-left>
@@ -18,7 +18,7 @@
   </navigation-bar>
   <!-- 轮播图 -->
   <div class="home-swiper">
-    <my-swiper :swiperImg="swiperImg" :height="SwiperHeight"></my-swiper>
+    <MySwiper :swiperImg="swiper" :height="SwiperHeight"></MySwiper>
   </div>
   <!-- 520活动布局  -->
   <Activity>
@@ -106,6 +106,9 @@ export default {
     const { data: activityData } = await getActivity()
     this.activityImg = activityData.list
   },
+  activated(){
+    this.$refs.home.scrollTop = this.scrollTopValue
+  },
   methods: {
     onScrollHome($event) {
       // 获取当前页面滚动的距离
@@ -121,6 +124,14 @@ export default {
       this.navBarStyle.backgroundColor = `rgba(255,255,255,${opacity})`
     }
   },
+  computed: {
+    swiper: function() {
+      const swiper = this.swiperImg.map(item => {
+        return item.icon
+      })
+      return swiper
+    }
+  },
  components: {
     MySwiper,
     Activity,
@@ -128,7 +139,8 @@ export default {
     Spike,
     Goods,
     NavigationBar,
-    Search
+    Search,
+    MySwiper
 }
 }
 </script>

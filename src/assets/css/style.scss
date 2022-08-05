@@ -10,8 +10,19 @@
   -webkit-box-orient: vertical;
   display: -webkit-box;
 }
+.text-line-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
 .z-index-2 {
   z-index: 2;
+}
+.z-index-3 {
+  z-index: 3;
 }
 // 三角形
 .careticon {

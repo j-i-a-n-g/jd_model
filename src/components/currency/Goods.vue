@@ -1,6 +1,7 @@
 <template>
-  <div class="goods" :class="goodsStyle" :style="{height: parentHeight}">
-    <div class="goods-item" :class="goodsStyleItem" v-for="(item, index) in sortGoodsSource" :key="index" :style="goodsItemStyle[index]" ref="goodsItem">
+  <div class="goods" :class="goodsStyle" :style="{height: parentHeight}"  ref="goods" @scroll="onScrollChange">
+    <div class="goods-item" :class="goodsStyleItem" v-for="(item, index) in sortGoodsSource" 
+    :key="index" :style="goodsItemStyle[index]" ref="goodsItem"  @click="RouterToGoodsDetail(item)">
     <!-- 图片 -->
     <img class="goods-item-img" :style="heightArr[index]" :src="item.img" alt="">
     <!-- 商品详情描述 -->
@@ -80,6 +81,8 @@ export default {
       ],
       // 用做根据属性进行排序的数据源
       sortGoodsSource: [],
+      // 保存页面滚动的距离
+      ScrollTopValue: 0
     }
   },
   async created() {
@@ -88,6 +91,9 @@ export default {
     this.initStyle()
     console.log(data.list)
     this.setSortGoodsListById()
+  },
+  activated() {
+    this.$refs.goods.scrollTop = this.ScrollTopValue
   },
   methods: {
     // 初始化布局页面
@@ -204,7 +210,28 @@ export default {
           return 1
         }
       })
+    },
+    // 点击商品进入商品详情
+      // 跳转到 商品详情页面
+  RouterToGoodsDetail(item) {
+    if(!item.isHave) {
+      alert('该商品无库存')
+      return
     }
+    this.$router.push({
+      name: 'GoodsDetail',
+      params: {
+        goods: item,
+        routeType: 'push'
+      },
+      query: {
+        goodsId: item.id
+      }
+    })
+  },
+  onScrollChange($event){
+    this.ScrollTopValue = $event.target.scrollTop
+  }
   },
   watch: {
     type: function() {
@@ -212,7 +239,6 @@ export default {
     },
     // 监听排序方式对应的Id变化
     optionsDatasId: function() {
-      // console.log(this.optionsDatasId)
       this.setSortGoodsListById()
     },
     // 监听列表数据变化，刷新页面

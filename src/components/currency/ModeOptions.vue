@@ -67,7 +67,12 @@ export default {
   },
   methods: {
     goGoodsList() {
-      this.$router.push('/goodslist')
+      this.$router.push({
+        name: 'GoodsList',
+        params: {
+          routeType: 'push'
+        }
+      })
     }
   }
 }

@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import NavigationBar from './NavigationBar.vue'
-import GoodsOptions from './currency/GoodsListComponents/GoodsOptions.vue'
-import Goods from './currency/Goods.vue'
+import NavigationBar from '../components/NavigationBar.vue'
+import GoodsOptions from '../components/currency/GoodsListComponents/GoodsOptions.vue'
+import Goods from '../components/currency/Goods.vue'
 export default {
   name: 'GoodsList',
   components: {
@@ -85,6 +85,7 @@ methods: {
   background-color: $bgColor;
   display: flex;
   flex-direction: column;
+  position: absolute;
   &-content {
     height: 100%;
     display: flex;

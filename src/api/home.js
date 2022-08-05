@@ -11,3 +11,6 @@ export const getSpike = () => request('get', '/seconds')
 
 // 获取商品列表
 export const getGoodsList = () => request('get', '/goods')
+
+// 获取商品详情信息
+export const getGoodsDetail = (data) => request('get', '/goodsDetail', data)

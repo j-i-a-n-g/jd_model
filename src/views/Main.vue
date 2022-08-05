@@ -1,6 +1,8 @@
 <template>
 <div class="main">
-  <component :is="currentComponent"></component>
+  <keep-alive>
+    <component :is="currentComponent"></component>
+  </keep-alive>
   <ToolBar @onChangeFragment="onChangeFragment"></ToolBar>
 </div>
 </template>
@@ -35,5 +37,6 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: absolute;
 }
 </style>
