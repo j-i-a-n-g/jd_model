@@ -13,6 +13,7 @@
         <div class="shopping-content-list-item-desc">
           <p class="shopping-content-list-item-desc-name text-line-2">
             <!-- 是否直营 -->
+            
             <Direct v-if="item.isDirect"></Direct>
             {{item.name}}
           </p>

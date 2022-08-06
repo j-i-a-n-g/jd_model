@@ -1,7 +1,6 @@
 <template>
 <div class="my">
   <navigation-bar :pageName="pageName" :isShowBack="false"></navigation-bar>
-  My
 </div>
 </template>
 
@@ -11,7 +10,7 @@ export default {
  name: 'My' ,
   data() {
   return {
-    pageName: '我的'
+    pageName: '个人中心'
   }
  },
  components: { NavigationBar },
