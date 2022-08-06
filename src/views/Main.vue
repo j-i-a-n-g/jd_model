@@ -3,7 +3,7 @@
   <keep-alive>
     <component :is="currentComponent"></component>
   </keep-alive>
-  <ToolBar @onChangeFragment="onChangeFragment"></ToolBar>
+  <ToolBar ref="toolBar" @onChangeFragment="onChangeFragment"></ToolBar>
 </div>
 </template>
 
@@ -16,10 +16,19 @@ export default {
       currentComponent: 'Home'
     }
   },
+  activated() {
+    this.pushFragment()
+  },
   methods: {
     onChangeFragment: function(componentName) {
-      this.currentComponent = componentName
-    }
+        this.currentComponent = componentName
+    },
+    // 指定需要加载的组件
+    pushFragment: function() {
+      if(!this.$route.params.componentIndex) return
+        let componentIndex = this.$route.params.componentIndex
+        this.$refs.toolBar.pushFragment(componentIndex)
+  }
   },
   components: {
     ToolBar,
@@ -36,7 +45,7 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   position: absolute;
 }
 </style>

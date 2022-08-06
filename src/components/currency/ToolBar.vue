@@ -51,9 +51,14 @@ export default {
     }
   },
   methods: {
-    onChangeFragment: function(componentName, index) {
+    onChangeFragment: function(componentName,index) {
       this.selectItemIndex = index
       this.$emit('onChangeFragment', componentName)
+    },
+    // 指定切换的 tab 页
+    pushFragment: function(index) {
+      // 调用 onChangeFragment 切换对应的 tab
+      this.onChangeFragment(this.toolBarData[index].componentName, index)
     }
   }
 }

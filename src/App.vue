@@ -41,6 +41,10 @@ export default {
         // 将最后的任务从虚拟任务栈中推出
         this.virtualTaskStack.pop()
       }
+      // 初始化虚拟renwuzh
+      if (to.params.clearTask === 'clear') {
+        this.virtualTaskStack = ['Main']
+      }
     }
   }
 }

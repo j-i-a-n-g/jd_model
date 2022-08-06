@@ -23,6 +23,7 @@
 
 <script>
 export default {
+  name: 'NavigationBar',
   props: {
     // 页面标题名称
     pageName: {

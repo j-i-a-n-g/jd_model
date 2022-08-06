@@ -32,7 +32,7 @@
   <Spike />
   <!-- 拼购节 -->
   <Activity>
-    <div class="activity-pin-gou-jit">
+    <div class="activity-pin-gou-jie">
       <img src="@img/haoHuoQiang.gif" alt="">
     </div>
   </Activity>
@@ -166,7 +166,7 @@ export default {
       width: 33.33%;
     }
   }
-  .activity-pin-gou-jit {
+  .activity-pin-gou-jie {
     background-color: #fff;
     margin-top: $marginSize;
     img {

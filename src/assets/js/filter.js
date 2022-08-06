@@ -3,7 +3,7 @@ import Vue from 'vue';
 // 对价格数据进行处理
 Vue.filter('priceValue', (value) => {
   if(!value) {
-    return '';
+    return 0.00;
   }
 
   // 文本转换成浮点数据

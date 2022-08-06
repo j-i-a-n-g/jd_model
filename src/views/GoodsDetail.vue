@@ -55,7 +55,7 @@
     </div>
       <!-- 加入购物车，立即购买 -->
     <div class="goods-detail-buy z-index-3">
-      <div class="goods-detail-buy-add">加入购物车</div>
+      <div class="goods-detail-buy-add" @click="onRouterToShopping">加入购物车</div>
       <div class="goods-detail-buy-now" @click="onRouterToBuy">立即购买</div>
     </div>
   </div>
@@ -67,6 +67,7 @@ import MySwiper from '@/components/swiper/MySwiper.vue'
 import Direct from '@/components/currency/GoodsComponents/Direct.vue'
 import Parallax from '@/components/Parallax/Parallax.vue'
 import { getGoodsDetail } from '@/api/home'
+import store from '@/store'
 export default {
   name: 'GoodsDetail',
   components: { NavigationBar, MySwiper, Direct, Parallax },
@@ -113,6 +114,19 @@ export default {
         },
         query: {
           goodsId: this.$route.query.goodsId
+        }
+      })
+    },
+    onRouterToShopping(){
+      // 将该商品放置到购物车清单中
+      store.commit('addShopping', this.goodsData)
+      this.$router.push({
+        name: 'Main',
+        params: {
+          routeType: 'push',
+          componentIndex: 1,
+          // 清空虚拟执行栈的自定义属性
+          clearTask: 'clear'
         }
       })
     },
