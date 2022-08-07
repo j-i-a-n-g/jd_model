@@ -55,7 +55,7 @@ export default {
  data() {
   return {
     swiperImg: [],
-    SwiperHeight: '184px',
+    SwiperHeight: this.$store.state.isIphone ? '228px' : '184px',
     activityImg: [],
     // navBar 插槽样式，包括滑动和未滑动的样式
     navBarSlotStyle: {

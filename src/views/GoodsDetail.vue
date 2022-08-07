@@ -54,7 +54,7 @@
       </Parallax>
     </div>
       <!-- 加入购物车，立即购买 -->
-    <div class="goods-detail-buy z-index-3">
+    <div class="goods-detail-buy z-index-3" :class="{'iphoneX-bottom' : $store.state.isIphoneX}">
       <div class="goods-detail-buy-add" @click="onRouterToShopping">加入购物车</div>
       <div class="goods-detail-buy-now" @click="onRouterToBuy">立即购买</div>
     </div>

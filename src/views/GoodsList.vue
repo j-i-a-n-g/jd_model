@@ -10,7 +10,7 @@
       <img :src="showType.icon" @click="changeShowType">
     </template>
     </navigation-bar>
-    <div class="goods-list-content">
+    <div class="goods-list-content" :class="{'iphoneX-bottom' : $store.state.isIphoneX}">
       <GoodsOptions @updateId="onUpdataId"></GoodsOptions>
       <Goods class="goods" :type="showType.type" :optionsDatasId="sortType"></Goods>
     </div>

@@ -13,11 +13,15 @@ export default {
   name: 'Main',
   data() {
     return {
-      currentComponent: 'Home'
+      currentComponent: 'Home',
+      loading: true
     }
   },
   activated() {
     this.pushFragment()
+  },
+  mounted() {
+    this.loading = false
   },
   methods: {
     onChangeFragment: function(componentName) {

@@ -24,6 +24,18 @@ export default {
       virtualTaskStack: ['Main']
     }
   },
+  created() {
+    // 项目开始运行时，即判断是否为 IphoneX
+    this.$store.commit('setIsIphoneX', window.isIphoneX)
+    // 指定 Native 主动调用的方法
+    window.nativeFunctionUserLogin = this.nativeFunctionUserLogin
+  },
+  methods: {
+    // 提供给 native 调用的方法，这个方法可以接收当前自动登录的用户的用户名
+    nativeFunctionUserLogin: function(username) {
+      this.$store.commit('setUsername', username)
+    }
+  },
   watch: {
     // 监听路由对象，决定使用哪种过渡效果
     '$route'(to, from) {

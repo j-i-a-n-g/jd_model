@@ -19,12 +19,14 @@
 
 <script>
 import NavigationBar from '@/components/NavigationBar.vue';
+import md5 from '@js/md5.min.js';
 export default {
     name: "Login",
     data() {
       return {
         username: '',
-        password: ''
+        password: '',
+        md5password: '',
       }
     },
     methods: {
@@ -34,9 +36,18 @@ export default {
       },
       onLoginClick: function() {
         // 验证用户输入内容是否合法
-        if(this.username || this.password) {
+        if(!this.username || !this.password) {
           alert('用户名或密码不能为空')
           return
+        }
+        this.md5password = md5(this.password)
+        // 判断项目运行的环境是安卓设备还是 IOS 设备
+        if(window.androidJSBridge) {
+          // 安卓环境
+          this.onLoginToAndriod()
+        } else if (window.webkit) {
+          // IOS 环境
+          this.onLoginToIOS()
         }
       },
       // 跳转到注册页面
@@ -47,6 +58,45 @@ export default {
             routeType: 'push'
           }
         })
+      },
+      // 登录账号功能
+      onLoginToAndriod: function() {
+       let userJson = JSON.stringify({
+          'username': this.username,
+          'password': this.md5password
+        })
+        // 调用 andriod 登录接口
+        let string = window.androidJSBridge.login(userJson)
+        this.onLoginCallback(string)
+      },
+      onLoginToIOS: function() {
+       let userJson = {
+          'username': this.username,
+          'password': this.md5password
+        }
+        // 回调方法
+        window.loginCallback = this.onLoginCallback
+        // 调用 IOS 登录接口
+        window.webkit.messageHandlers.login.postMessage(userJson)
+      },
+
+      //  处理登录接口返回函数
+      onLoginCallback: function(result) {
+        switch (result) {
+          case -1:
+            alert('服务器错误，请重试')
+            break;
+          case 0:
+            this.$store.commit('setUsername', this.username)
+            this.onLeftClick()
+            break;
+          case 1:
+            alert('登录用户不存在，请先注册')
+            break;
+          case 2:
+            alert('密码错误，请查正再试')
+            break;
+        }
       }
     },
     components: { NavigationBar }

@@ -1,6 +1,6 @@
 <template>
   <div class="navigation z-index-max" :style="navBarStyle"
-  :class="{'bottom-line': pageName}">
+  :class="[{'bottom-line': pageName}, {'iphoneX-top' : $store.state.isIphoneX}]">
     <!-- 左侧 -->
     <div class="left">
       <img src="@img/back.svg" alt="" v-if="isShowBack" @click="$emit('onLeftClick')">

@@ -6,7 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // 购物车列表数据
-    shoppingList: []
+    shoppingList: [],
+    // 当前设备是否为IphoneX
+    isIphoneX: false,
+    // 登录用户的用户名
+    username: undefined
   },
   getters: {
   },
@@ -30,6 +34,18 @@ export default new Vuex.Store({
     // 改变购物车列表中指定商品的buyCount 值
     changeBuyCount: function(state, data) {
       state.shoppingList[data.index].buyCount = data.newV
+    },
+    // 修改 isIphoneX
+    setIsIphoneX: function(state, isIphoneX) {
+      state.isIphoneX = isIphoneX
+    },
+    // 保存用户名
+    setUsername: function(state, username) {
+      state.username = username
+    },
+    // 删除用户名，退出登录
+    clearUsername: function(state) {
+      state.username = undefined
     }
   },
   actions: {
