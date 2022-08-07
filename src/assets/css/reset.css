@@ -50,4 +50,8 @@ html, body {
   font-size: 0;
   /* 整个项目不允许区选中文字 */
   user-select: none;
+  /* IOS下的滑动卡顿问题 */
+  -webkit-overflow-scrolling: touch;
+  /* ISO下的点击效果高亮问题 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }

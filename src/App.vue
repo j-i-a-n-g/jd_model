@@ -6,7 +6,6 @@
         2.在组件中创建一个变量，会被keep-alive保存起来，该变量用于保存页面滑动的状态
         3.当跳转回到页面时，使用该变量改变页面滑动的距离
        -->
-    
     <transition :name="transitionName">
     <!-- 将通过router-view加载的页面组件缓存起来 -->
     <keep-alive :include="virtualTaskStack">
