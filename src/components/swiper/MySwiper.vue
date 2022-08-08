@@ -4,6 +4,7 @@
     <swiper-slide  v-for="(item, index) in swiperImg" :key="index">
       <img class="swiper-slide-img" :style="{ height: height }" :src="item" alt="">
     </swiper-slide>
+      <Skeleton :height="height" width="100%"></Skeleton>
     <!-- 分页器 -->
     <template v-slot:pagination>
       <div class="swiper-pagination" :class="swiperOptions.pagination.bulletClass"></div>

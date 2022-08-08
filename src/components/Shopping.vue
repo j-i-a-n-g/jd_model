@@ -2,7 +2,7 @@
 <div class="shopping">
   <navigation-bar :pageName="pageName" :isShowBack="false"></navigation-bar>
   <!-- 购物车内容 -->
-  <div class="shopping-content">
+  <div class="shopping-content" v-if="shoppingList.length">
     <div class="shopping-content-list">
       <div class="shopping-content-list-item" v-for="(item, index) in shoppingList" :key="index">
       <!-- 是否选中 -->
@@ -26,8 +26,11 @@
         </div>
       </div>
     </div>
-
-    <!-- 统计 -->
+  </div>
+  <div class="shopping-content" v-else>
+    <span class="shopping-content-empty">空空如也~</span>
+  </div>
+      <!-- 统计 -->
     <div class="shopping-content-total">
       <div class="shopping-content-total-check">
         <img :src="chooseImg(totalData.chooseAll)" alt="" @click="onChangeAllShoppingState">
@@ -48,7 +51,6 @@
         去结算({{totalData.allShoppingCount}})
       </div>
     </div>
-  </div>
 </div>
 </template>
 
@@ -75,9 +77,6 @@ export default {
       allShoppingCount: 0
     }
   }
- },
- updated() {
-  console.log(this.shoppingList);
  },
  activated() {
    this.computedAllShopping()
@@ -149,11 +148,13 @@ export default {
   height: 100%;
   overflow: hidden;
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   &-content {
     background-color: $bgColor;
     border-top: px2rem(1) solid $lineColor;
-    height: 93%;
+    flex-grow: 1;
+    overflow: hidden;
+    overflow-y: auto;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -202,8 +203,15 @@ export default {
         }
       }
     }
-    // 总计
-    &-total {
+    &-empty {
+      margin: 50% auto;
+      text-align: center;
+      font-size: $infoSize;
+      color: #666
+    }
+  }
+  // 总计
+  &-content-total {
       height: px2rem(56);
       box-sizing: border-box;
       display: flex;
@@ -258,7 +266,6 @@ export default {
         align-items: center;
         justify-content: center;
       }
-    }
   }
 }
 </style>

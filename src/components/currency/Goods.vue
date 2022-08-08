@@ -245,7 +245,7 @@ export default {
   components: {
     Direct,
     Empty,
-    Empty
+    Empty,
 }
 }
 </script>

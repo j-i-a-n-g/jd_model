@@ -50,6 +50,7 @@ export default {
   height: 100%;
   display: flex;
   flex-flow: column;
+  justify-content: space-between;
   position: absolute;
 }
 </style>

@@ -31,7 +31,7 @@
       </ul>
     </div>
     <!-- 底部立即购买按钮 -->
-    <div class="buy-button page-commit">立即购买</div>
+    <div class="buy-button page-commit" @click="onPayClick">立即购买</div>
   </div>
 </template>
 
@@ -74,16 +74,31 @@ export default {
   },
   methods: {
     // 点击返回按钮，回退到上一个页面
-    onLeftClick() {
+    onLeftClick: function() {
       this.$router.go(-1)
     },
     // 被选中的支付方式和对应显示的图标
-    beChoosePayment(boolean) {
+    beChoosePayment: function(boolean) {
       return boolean ? require('@img/check.svg') : require('@img/no-check.svg')
     },
     // 切换支付方式
-    choosePayment(item) {
+    choosePayment: function(item) {
       this.UserChoosePayment = item
+    },
+    onPayClick: function() {
+      if (this.UserChoosePayment.id === '1') {
+        // 用户选择了支付宝支付
+        if (window.androidJSBridge) {
+          // 调用支付宝支付的方式
+          window.androidJSBridge.aliPay(JSON.stringify(this.goodsData))
+        }
+      } else if (this.UserChoosePayment.id === '2') {
+        // 用户选择了微信支付
+          if (window.androidJSBridge) {
+          // 调用微信支付的方式
+          window.androidJSBridge.wePay(JSON.stringify(this.goodsData))
+        }
+      }
     }
   }
 }
